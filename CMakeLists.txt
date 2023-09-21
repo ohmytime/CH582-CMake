@@ -42,6 +42,10 @@ add_compile_options(-march=rv32imac -mabi=ilp32 -misa-spec=2.2 -mcmodel=medany -
 add_compile_options(-fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common)
 
 #  Step 3: 设定编译类型
+# 使用本命令查看是否包含debug符号
+# Linux : readelf -S Hexfile | grep debug
+# MacOS : greadelf -S Hexfile | grep debug
+
 SET(CMAKE_BUILD_TYPE "Debug")
 #SET(CMAKE_BUILD_TYPE "Release")
 

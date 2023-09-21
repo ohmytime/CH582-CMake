@@ -6,7 +6,7 @@
  * Description
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * Attention: This software (modified or not) and binary are used for 
+ * Attention: This software (modified or not) and binary are used for
  * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
@@ -28,13 +28,13 @@ void SetSysClock(SYS_CLKTypeDef sc)
     sys_safe_access_enable();
     R8_PLL_CONFIG &= ~(1 << 5); //
     sys_safe_access_disable();
-    if(sc & 0x20)
+    if (sc & 0x20)
     { // HSE div
-        if(!(R8_HFCK_PWR_CTRL & RB_CLK_XT32M_PON))
+        if (!(R8_HFCK_PWR_CTRL & RB_CLK_XT32M_PON))
         {
             sys_safe_access_enable();
             R8_HFCK_PWR_CTRL |= RB_CLK_XT32M_PON; // HSE power on
-            for(i = 0; i < 1200; i++)
+            for (i = 0; i < 1200; i++)
             {
                 __nop();
                 __nop();
@@ -54,13 +54,13 @@ void SetSysClock(SYS_CLKTypeDef sc)
         sys_safe_access_disable();
     }
 
-    else if(sc & 0x40)
+    else if (sc & 0x40)
     { // PLL div
-        if(!(R8_HFCK_PWR_CTRL & RB_CLK_PLL_PON))
+        if (!(R8_HFCK_PWR_CTRL & RB_CLK_PLL_PON))
         {
             sys_safe_access_enable();
             R8_HFCK_PWR_CTRL |= RB_CLK_PLL_PON; // PLL power on
-            for(i = 0; i < 2000; i++)
+            for (i = 0; i < 2000; i++)
             {
                 __nop();
                 __nop();
@@ -73,7 +73,7 @@ void SetSysClock(SYS_CLKTypeDef sc)
         __nop();
         __nop();
         sys_safe_access_disable();
-        if(sc == CLK_SOURCE_PLL_80MHz)
+        if (sc == CLK_SOURCE_PLL_80MHz)
         {
             sys_safe_access_enable();
             R8_FLASH_CFG = 0X02;
@@ -91,7 +91,7 @@ void SetSysClock(SYS_CLKTypeDef sc)
         sys_safe_access_enable();
         R16_CLK_SYS_CFG |= RB_CLK_SYS_MOD;
     }
-    //更改FLASH clk的驱动能力
+    // 更改FLASH clk的驱动能力
     sys_safe_access_enable();
     R8_PLL_CONFIG |= 1 << 7;
     sys_safe_access_disable();
@@ -111,11 +111,11 @@ uint32_t GetSysClock(void)
     uint16_t rev;
 
     rev = R16_CLK_SYS_CFG & 0xff;
-    if((rev & 0x40) == (0 << 6))
+    if ((rev & 0x40) == (0 << 6))
     { // 32M进行分频
         return (32000000 / (rev & 0x1f));
     }
-    else if((rev & RB_CLK_SYS_MOD) == (1 << 6))
+    else if ((rev & RB_CLK_SYS_MOD) == (1 << 6))
     { // PLL进行分频
         return (480000000 / (rev & 0x1f));
     }
@@ -136,7 +136,7 @@ uint32_t GetSysClock(void)
  */
 uint8_t SYS_GetInfoSta(SYS_InfoStaTypeDef i)
 {
-    if(i == STA_SAFEACC_ACT)
+    if (i == STA_SAFEACC_ACT)
     {
         return (R8_SAFE_ACCESS_SIG & RB_SAFE_ACC_ACT);
     }
@@ -225,7 +225,7 @@ void WWDG_ITCfg(FunctionalState s)
 {
     uint8_t ctrl = R8_RST_WDOG_CTRL;
 
-    if(s == DISABLE)
+    if (s == DISABLE)
     {
         ctrl &= ~RB_WDOG_INT_EN;
     }
@@ -252,7 +252,7 @@ void WWDG_ResetCfg(FunctionalState s)
 {
     uint8_t ctrl = R8_RST_WDOG_CTRL;
 
-    if(s == DISABLE)
+    if (s == DISABLE)
     {
         ctrl &= ~RB_WDOG_RST_EN;
     }
@@ -291,10 +291,10 @@ void WWDG_ClearFlag(void)
  *
  * @return  none
  */
-__INTERRUPT
 __HIGH_CODE
-__attribute__((weak))
-void HardFault_Handler(void)
+__attribute__((interrupt("user")))
+__attribute__((weak)) void
+HardFault_Handler(void)
 {
     FLASH_ROM_SW_RESET();
     sys_safe_access_enable();
@@ -302,7 +302,8 @@ void HardFault_Handler(void)
     sys_safe_access_enable();
     R8_RST_WDOG_CTRL |= RB_SOFTWARE_RESET;
     sys_safe_access_disable();
-    while(1);
+    while (1)
+        ;
 }
 
 /*********************************************************************
@@ -318,27 +319,27 @@ __HIGH_CODE
 void mDelayuS(uint16_t t)
 {
     uint32_t i;
-#if(FREQ_SYS == 80000000)
+#if (FREQ_SYS == 80000000)
     i = t * 20;
-#elif(FREQ_SYS == 60000000)
+#elif (FREQ_SYS == 60000000)
     i = t * 15;
-#elif(FREQ_SYS == 48000000)
+#elif (FREQ_SYS == 48000000)
     i = t * 12;
-#elif(FREQ_SYS == 40000000)
+#elif (FREQ_SYS == 40000000)
     i = t * 10;
-#elif(FREQ_SYS == 32000000)
+#elif (FREQ_SYS == 32000000)
     i = t << 3;
-#elif(FREQ_SYS == 24000000)
+#elif (FREQ_SYS == 24000000)
     i = t * 6;
-#elif(FREQ_SYS == 16000000)
+#elif (FREQ_SYS == 16000000)
     i = t << 2;
-#elif(FREQ_SYS == 8000000)
+#elif (FREQ_SYS == 8000000)
     i = t << 1;
-#elif(FREQ_SYS == 4000000)
+#elif (FREQ_SYS == 4000000)
     i = t;
-#elif(FREQ_SYS == 2000000)
+#elif (FREQ_SYS == 2000000)
     i = t >> 1;
-#elif(FREQ_SYS == 1000000)
+#elif (FREQ_SYS == 1000000)
     i = t >> 2;
 #else
     i = t << 1;
@@ -346,7 +347,7 @@ void mDelayuS(uint16_t t)
     do
     {
         __nop();
-    } while(--i);
+    } while (--i);
 }
 
 /*********************************************************************
@@ -363,7 +364,7 @@ void mDelaymS(uint16_t t)
 {
     uint16_t i;
 
-    for(i = 0; i < t; i++)
+    for (i = 0; i < t; i++)
     {
         mDelayuS(1000);
     }
@@ -373,19 +374,22 @@ void mDelaymS(uint16_t t)
 void _putchar(char character)
 {
 #if DEBUG == Debug_UART0
-        while(R8_UART0_TFC == UART_FIFO_SIZE);                  /* 等待数据发送 */
-        R8_UART0_THR = (uint8_t)character; /* 发送数据 */
+    while (R8_UART0_TFC == UART_FIFO_SIZE)
+        ;                              /* 等待数据发送 */
+    R8_UART0_THR = (uint8_t)character; /* 发送数据 */
 #elif DEBUG == Debug_UART1
-        while(R8_UART1_TFC == UART_FIFO_SIZE);                  /* 等待数据发送 */
-        R8_UART1_THR = (uint8_t)character; /* 发送数据 */
+    while (R8_UART1_TFC == UART_FIFO_SIZE)
+        ;                              /* 等待数据发送 */
+    R8_UART1_THR = (uint8_t)character; /* 发送数据 */
 #elif DEBUG == Debug_UART2
-        while(R8_UART2_TFC == UART_FIFO_SIZE);                  /* 等待数据发送 */
-        R8_UART2_THR = (uint8_t)character; /* 发送数据 */
-#elif DEBUG == Debug_UART3       
-        while(R8_UART3_TFC == UART_FIFO_SIZE);                  /* 等待数据发送 */
-        R8_UART3_THR = (uint8_t)character; /* 发送数据 */
+    while (R8_UART2_TFC == UART_FIFO_SIZE)
+        ;                              /* 等待数据发送 */
+    R8_UART2_THR = (uint8_t)character; /* 发送数据 */
+#elif DEBUG == Debug_UART3
+    while (R8_UART3_TFC == UART_FIFO_SIZE)
+        ;                              /* 等待数据发送 */
+    R8_UART3_THR = (uint8_t)character; /* 发送数据 */
 #endif
 }
 
 #endif
-

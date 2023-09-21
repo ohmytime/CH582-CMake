@@ -1,10 +1,17 @@
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_VERSION 1)
-set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
+set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")           
 cmake_minimum_required(VERSION 3.20)
 
+# 定义了变量TOP_PROJECT_NAME为"ch582-ninja"
+set (TOP_PROJECT_NAME "ch582-ninja") 
+# 项目设置
+project(${TOP_PROJECT_NAME} C CXX ASM)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_C_STANDARD 99)
+
 # 工具链设置
-set(TOOLPATH  D:/0wch/toolchain/RISCVEmbeddedGCC/bin/riscv-none-embed-)
+set(TOOLPATH  /Users/kevin/Dev_tools/riscv-none-elf-gcc/xpack-riscv-none-elf-gcc-12.3.0-1/bin/riscv-none-elf-)
 
 if (WIN32)
 	MESSAGE(STATUS "Now is windows!")
@@ -30,20 +37,31 @@ endif ()
 
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
-# 项目设置
-project(ch582-ninja C CXX ASM)
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_C_STANDARD 99)
 
 # 编译参数 一般不用改
-add_compile_options(-march=rv32imac -mabi=ilp32 -mcmodel=medany -msmall-data-limit=8 -mno-save-restore)
+add_compile_options(-march=rv32imac -mabi=ilp32 -misa-spec=2.2 -mcmodel=medany -msmall-data-limit=8 -mno-save-restore)
 add_compile_options(-fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common)
 
-# 编译等级
-add_compile_options(-O2)
+# 设定编译类型
+SET(CMAKE_BUILD_TYPE "Debug")
+#SET(CMAKE_BUILD_TYPE "Release")
 
-# 编译信息等级
-add_compile_options(-Wall)
+# 编译信息等级 & 编译优化等级
+if(CMAKE_BUILD_TYPE AND (CMAKE_BUILD_TYPE STREQUAL "Debug"))
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -O0")
+    set(CMAKE_CXX_FLAGS_DEBUG   "-DDEBUG -O0 -g")
+    set(CMAKE_ASM_FLAGS_DEBUG   "-DDEBUG -O0 -g")
+    message("Debug mode:${CMAKE_C_FLAGS_DEBUG}")
+elseif(CMAKE_BUILD_TYPE AND (CMAKE_BUILD_TYPE STREQUAL "Release"))
+    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall -O2")
+    set(CMAKE_CXX_FLAGS_RELEASE      "-DNDEBUG -Os") #  -flto
+    set(CMAKE_ASM_FLAGS_RELEASE      "-DNDEBUG -Os")
+    message("Release mode:${CMAKE_C_FLAGS_RELEASE}")
+else()
+    message("else:${CMAKE_BUILD_TYPE}")
+    message("else:${CMAKE_C_FLAGS_RELEASE}")
+endif()
+
 
 # 头文件路径
 include_directories(BLE_LIB 
@@ -87,6 +105,17 @@ target_link_libraries(${PROJECT_NAME}.elf
         ${CMAKE_SOURCE_DIR}/StdPeriphDriver/libISP583.a 
         ${CMAKE_SOURCE_DIR}/BLE_LIB/LIBCH58xBLE.a 
         ${CMAKE_SOURCE_DIR}/USB_LIB/libRV3UFI.a)
+
+# 设置ELF, Bin / Hex 文件路径
+if(CMAKE_BUILD_TYPE AND (CMAKE_BUILD_TYPE STREQUAL "Debug"))
+    set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/debug)              # ELF
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/debug)
+    set(PROJECT_BINARY_DIR ${PROJECT_SOURCE_DIR}/bin/debug)                   # Hex/Bin
+elseif(CMAKE_BUILD_TYPE AND (CMAKE_BUILD_TYPE STREQUAL "Release"))
+    set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/release)            # ELF
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/release)
+    set(PROJECT_BINARY_DIR ${PROJECT_SOURCE_DIR}/bin/release)                 # Hex/Bin
+endif()
 
 # 输出hex和bin
 set(HEX_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.hex)

@@ -291,10 +291,10 @@ void WWDG_ClearFlag(void)
  *
  * @return  none
  */
-__HIGH_CODE
 __attribute__((interrupt("user")))
-__attribute__((weak)) void
-HardFault_Handler(void)
+__attribute__((weak))
+__HIGH_CODE 
+void HardFault_Handler(void)
 {
     FLASH_ROM_SW_RESET();
     sys_safe_access_enable();

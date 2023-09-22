@@ -53,8 +53,8 @@ void RTC_SetTignTime(uint32_t time)
  * @return  None.
  */
 __attribute__((interrupt("machine")))
-__HIGH_CODE void
-RTC_IRQHandler(void)
+__HIGH_CODE 
+void RTC_IRQHandler(void)
 {
     R8_RTC_FLAG_CTRL = (RB_RTC_TMR_CLR | RB_RTC_TRIG_CLR);
     RTCTigFlag = 1;

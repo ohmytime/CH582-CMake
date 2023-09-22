@@ -8,3 +8,4 @@ ch582-ninja.map
 build/
 bin/
 CMakeFiles/
+Dependency/

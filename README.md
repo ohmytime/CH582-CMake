@@ -6,6 +6,15 @@
 
 请在CmakeLists.txt文件内更改`TOOLPATH`的变量为你的工具链路径。
 
+使用脚本编译：
+
+```shell
+sh build.sh
+```
+
+如果是手动编译，可选择如下两个方法 
+
+
 ```shell
 A和B方法任选其一即可
 

@@ -45,9 +45,8 @@ add_compile_options(-fmessage-length=0 -fsigned-char -ffunction-sections -fdata-
 # 使用本命令查看是否包含debug符号
 # Linux : readelf -S Hexfile | grep debug
 # MacOS : greadelf -S Hexfile | grep debug
-
 SET(CMAKE_BUILD_TYPE "Debug")
-#SET(CMAKE_BUILD_TYPE "Release")
+# SET(CMAKE_BUILD_TYPE "Release")
 
 # 编译信息等级 & 编译优化等级
 if(CMAKE_BUILD_TYPE AND (CMAKE_BUILD_TYPE STREQUAL "Debug"))
@@ -67,29 +66,29 @@ endif()
 
 
 # 头文件路径
-include_directories(BLE_LIB 
-                    USB_LIB
-                    RVMSIS  
-                    StdPeriphDriver/inc
-                    printf
+include_directories(Dependency/BLE_LIB 
+                    Dependency/USB_LIB
+                    Dependency/RVMSIS  
+                    Dependency/StdPeriphDriver/inc
+                    Dependency/printf
                     APP/inc
-                    HAL/include)
+                    Dependency/HAL/include)
 
 # 宏定义
 add_definitions(-DDEBUG=1)
 
 # 源码文件
 file(GLOB_RECURSE SOURCES 
-                "Startup/*.S" 
-                "USB_LIB/*.c"
-                "RVMSIS/*.c"
-                "StdPeriphDriver/*.c" 
-                "printf/printf.c"
+                "Dependency/Startup/*.S" 
+                "Dependency/USB_LIB/*.c"
+                "Dependency/RVMSIS/*.c"
+                "Dependency/StdPeriphDriver/*.c" 
+                "Dependency/printf/printf.c"
                 "APP/*.c"
-                "HAL/*.c")
+                "Dependency/HAL/*.c")
 
 # 链接参数
-set(LINKER_SCRIPT  ${CMAKE_SOURCE_DIR}/Ld/Link.ld)
+set(LINKER_SCRIPT  ${CMAKE_SOURCE_DIR}/Dependency/Ld/Link.ld)
 add_link_options(
                 -march=rv32imac -mabi=ilp32
                 -nostartfiles 
@@ -105,19 +104,19 @@ add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
 
 # 链接静态库
 target_link_libraries(${PROJECT_NAME}.elf 
-        ${CMAKE_SOURCE_DIR}/StdPeriphDriver/libISP583.a 
-        ${CMAKE_SOURCE_DIR}/BLE_LIB/LIBCH58xBLE.a 
-        ${CMAKE_SOURCE_DIR}/USB_LIB/libRV3UFI.a)
+        ${CMAKE_SOURCE_DIR}/Dependency/StdPeriphDriver/libISP583.a 
+        ${CMAKE_SOURCE_DIR}/Dependency/BLE_LIB/LIBCH58xBLE.a 
+        ${CMAKE_SOURCE_DIR}/Dependency/USB_LIB/libRV3UFI.a)
 
 # 设置ELF, Bin / Hex 文件路径
 if(CMAKE_BUILD_TYPE AND (CMAKE_BUILD_TYPE STREQUAL "Debug"))
-    set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/debug)              # ELF
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/debug)
-    set(PROJECT_BINARY_DIR ${PROJECT_SOURCE_DIR}/bin/debug)                   # Hex/Bin
+    set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/debug)              # ELF
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build/debug)
+    set(PROJECT_BINARY_DIR ${PROJECT_SOURCE_DIR}/build/debug)                   # Hex/build
 elseif(CMAKE_BUILD_TYPE AND (CMAKE_BUILD_TYPE STREQUAL "Release"))
-    set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/release)            # ELF
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/release)
-    set(PROJECT_BINARY_DIR ${PROJECT_SOURCE_DIR}/bin/release)                 # Hex/Bin
+    set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/release)            # ELF
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build/release)
+    set(PROJECT_BINARY_DIR ${PROJECT_SOURCE_DIR}/build/release)                 # Hex/Bin
 endif()
 
 # 输出hex和bin

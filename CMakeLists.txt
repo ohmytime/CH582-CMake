@@ -4,7 +4,8 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 cmake_minimum_required(VERSION 3.20)
 
 # Step 1: 工具链设置 
-set(TOOLPATH /Users/kevin/Dev_tools/riscv-none-elf-gcc/xpack-riscv-none-elf-gcc-12.3.0-1/bin/riscv-none-elf-)
+# set(TOOLPATH /Users/kevin/Dev_tools/riscv-none-elf-gcc/xpack-riscv-none-elf-gcc-12.3.0-1/bin/riscv-none-elf-)
+set(TOOLPATH /Users/kevin/Dev_tools/WCH/xpack-riscv-none-embed-gcc-8.2.0/bin/riscv-none-embed-)
 
 if (WIN32)
 	MESSAGE(STATUS "Now is windows!")
@@ -31,14 +32,15 @@ endif ()
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
 #  Step 2: 定义了变量TOP_PROJECT_NAME为"ch582-ninja"
-set (TOP_PROJECT_NAME "ch582-ninja") 
+set (TOP_PROJECT_NAME "ch58x-ninja") 
 # 项目设置
 project(${TOP_PROJECT_NAME} C CXX ASM)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_C_STANDARD 99)
 
 # 编译参数 一般不用改
-add_compile_options(-march=rv32imac -mabi=ilp32 -misa-spec=2.2 -mcmodel=medany -msmall-data-limit=8 -mno-save-restore)
+# add_compile_options(-march=rv32imac -mabi=ilp32 -misa-spec=2.2 -mcmodel=medany -msmall-data-limit=8 -mno-save-restore)
+add_compile_options(-march=rv32imac -mabi=ilp32 -mcmodel=medany -msmall-data-limit=8 -mno-save-restore)
 add_compile_options(-fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common)
 
 #  Step 3: 设定编译类型

@@ -29,7 +29,9 @@ int main()
   PWR_DCDCCfg(ENABLE);
 #endif
   SetSysClock(CLK_SOURCE_PLL_60MHz);
+#ifdef DEBUG
   DebugInit();
+#endif
   printf("%s\n", VER_LIB);
   CH58X_BLEInit();
   HAL_Init();

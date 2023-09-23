@@ -1,4 +1,4 @@
-# CH582-CMake
+# CH58X-CMake
 
 摆脱eclipse编译环境，使用vscode编辑代码。
 

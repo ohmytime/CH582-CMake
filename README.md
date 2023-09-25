@@ -68,3 +68,6 @@ https://www.wch.cn/bbs/thread-88583-1.html
 https://www.cnblogs.com/wahahahehehe/p/16896184.html
 
 https://bbs.21ic.com/icview-3291850-1-1.html
+
+https://jia.je/hardware/2022/04/19/wch-ch32v307-eval/
+

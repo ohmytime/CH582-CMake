@@ -1,5 +1,7 @@
 # CH58X-CMake
 
+## 编译
+
 摆脱eclipse编译环境，使用vscode编辑代码。
 
 此仓库为cmake模板，请根据自己的工程进行适当修改。
@@ -29,3 +31,30 @@ cmake -G"Ninja" ..
 cmake -G"Ninja" -D"你的路径/ninja.exe" ..
 ```
 
+## 调试
+Mac OS M芯片平台：
+
+### Tips :
+- WCH-Link :需要设置好正确的模式
+
+    （[说明中文版](https://www.wch.cn/downloads/WCH-LinkUserManual_PDF.html))([LinkUserManual](https://www.wch-ic.com/downloads/WCH-LinkUserManual_PDF.html))
+
+    如果是ARM架构的芯片，则设置为ARM模式，否则需要设置为RISC-V模式
+
+- 安装好 libusb驱动
+
+    在MBA下，需要安装Apple版 + Intel版的 libusb驱动（因为沁恒的OpenOCD依赖的是Intel的libusb）
+
+- 把WCH-Link 连接好芯片，并且连接到电脑
+
+- 安装cortex-debug 1.4.4版本
+
+    因为沁恒使用的是GCC8，1.4.4版本是最后兼容GCC8的版本了。
+
+
+---
+
+最后就可以Debug了
+
+
+![Alt text](SCR-20230925-tgx.png)

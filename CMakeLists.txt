@@ -56,7 +56,7 @@ if(WCH_TOOL_CHAIN)
   add_compile_options(-march=rv32imac -mabi=ilp32 -mcmodel=medany
                       -msmall-data-limit=8 -mno-save-restore)
 else()
-  add_compile_options(-march=rv32imac -mabi=ilp32 -misa-spec=2.2
+  add_compile_options(-march=rv32imac_zicsr -mabi=ilp32
                       -mcmodel=medany -msmall-data-limit=8 -mno-save-restore)
 endif()
 

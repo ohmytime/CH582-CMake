@@ -1,5 +1,5 @@
 {
-    // 使用 IntelliSense 了解相关属性。 
+    // 使用 IntelliSense 了解相关属性。
     // 悬停以查看现有属性的描述。
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
@@ -8,19 +8,20 @@
             "name": "WCH Debug OpenOCD",
             "cwd": "${workspaceFolder}",
             // 改成你自己的路径
-            "executable": "./build/debug/ch58x-ninja.elf",
+            "executable": "${workspaceFolder}/build/debug/ch58x-ninja.elf",
             "request": "launch",
             "type": "cortex-debug",
             "runToEntryPoint": "main",
+            "runToMain": true,
             "servertype": "openocd",
-            "serverpath": "./Dependency/Toolchain/openocd",
+            "serverpath": "${workspaceFolder}/Dependency/Toolchain/openocd",
             "showDevDebugOutput": "none",
-            "device": "CH583",
-            "svdFile": "./Dependency/Toolchain/CH58Xxx.svd",
+            "device": "CH58X",
+            "svdFile": "${workspaceFolder}/Dependency/Toolchain/CH58Xxx.svd",
             // 改成你自己的工具链路径
             "toolchainPrefix": "/Users/kevin/Dev_tools/WCH/xpack-riscv-none-embed-gcc-8.2.0/bin/riscv-none-embed",
             "configFiles": [
-                "./Dependency/Toolchain/wch-riscv.cfg"
+                "${workspaceFolder}/Dependency/Toolchain/wch-riscv.cfg"
             ]
         }
     ]

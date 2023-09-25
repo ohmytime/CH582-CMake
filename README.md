@@ -14,7 +14,7 @@
 sh build.sh
 ```
 
-如果是手动编译，可选择如下两个方法 
+如果是手动编译，可选择如下两个方法
 
 
 ```shell
@@ -45,7 +45,7 @@ Mac OS M芯片平台：
 
     在MBA下，需要安装Apple版 + Intel版的 libusb驱动（因为沁恒的OpenOCD依赖的是Intel的libusb）
 
-- 把WCH-Link 连接好芯片，并且连接到电脑
+- 把WCH-Link 连接好芯片，然后芯片开启两线仿真，并且把开发板连接到电脑
 
 - 安装cortex-debug 1.4.4版本
 

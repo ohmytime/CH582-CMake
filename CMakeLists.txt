@@ -45,23 +45,35 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 set(TOP_PROJECT_NAME "ch58x-ninja")
 # 项目设置
 project(${TOP_PROJECT_NAME} C CXX ASM)
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_CXX_STANDARD 11) # C++ 11
+set(CMAKE_C_STANDARD 99) # C99
 set(CMAKE_INSTALL_PREFIX
     "/Users/kevin/Dev_tools/WCH/WCHISPTool_CMD/macOS/bin"
     CACHE PATH "Install path prefix" FORCE)
 
 # 编译参数 一般不用改
 if(WCH_TOOL_CHAIN)
-  add_compile_options(-march=rv32imac -mabi=ilp32 -mcmodel=medany
-                      -msmall-data-limit=8 -mno-save-restore)
+  add_compile_options(-march=rv32imac)
 else()
-  add_compile_options(-march=rv32imac_zicsr -mabi=ilp32
-                      -mcmodel=medany -msmall-data-limit=8 -mno-save-restore)
+  add_compile_options(-march=rv32imac_zicsr)
 endif()
 
+add_compile_options(-mabi=ilp32 -mcmodel=medany -msmall-data-limit=8
+                    -mno-save-restore)
 add_compile_options(-fmessage-length=0 -fsigned-char -ffunction-sections
                     -fdata-sections -fno-common)
+
+# 编译警告部分 参照：https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
+# 解释：https://tonybai.com/2006/03/14/explain-gcc-warning-options-by-examples/
+add_compile_options(
+  # -w # 禁止所有警告
+  -Wall
+  -Wextra # 除-Wall外其它的警告
+  -Wunused # 未使用警告
+  -Wfatal-errors # 出现第一个错误就停止编译
+  -Wswitch-default # Switch 应该有一个默认的defalut
+  # -Wcast-qual           # 被去掉cast限制警告
+)
 
 # Step 3: 设定编译类型 使用本命令查看是否包含debug符号 Linux : readelf -S Hexfile | grep debug
 # MacOS : greadelf -S Hexfile | grep debug
@@ -70,12 +82,12 @@ set(CMAKE_BUILD_TYPE "Debug")
 
 # 编译信息等级 & 编译优化等级
 if(CMAKE_BUILD_TYPE AND (CMAKE_BUILD_TYPE STREQUAL "Debug"))
-  set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -O0")
+  set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -ggdb -O0")
   set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG -O0 -g")
   set(CMAKE_ASM_FLAGS_DEBUG "-DDEBUG -O0 -g")
   message("Debug mode:${CMAKE_C_FLAGS_DEBUG}")
 elseif(CMAKE_BUILD_TYPE AND (CMAKE_BUILD_TYPE STREQUAL "Release"))
-  set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall -O2")
+  set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2")
   set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -Os") # -flto
   set(CMAKE_ASM_FLAGS_RELEASE "-DNDEBUG -Os")
   message("Release mode:${CMAKE_C_FLAGS_RELEASE}")
@@ -91,12 +103,13 @@ include_directories(
   Dependency/RVMSIS
   Dependency/StdPeriphDriver/inc
   Dependency/printf
-  APP/inc
-  Dependency/HAL/include)
+  Dependency/HAL/include
+  APP/include
+  Profile/include)
 
 # 用户宏定义
 add_definitions(-DDEBUG=1)
-
+add_definitions(-DDEBUG_BLE_MAC=1)
 # 源码文件
 file(
   GLOB_RECURSE
@@ -106,34 +119,49 @@ file(
   "Dependency/RVMSIS/*.c"
   "Dependency/StdPeriphDriver/*.c"
   "Dependency/printf/printf.c"
+  "Dependency/HAL/*.c"
   "APP/*.c"
-  "Dependency/HAL/*.c")
+  "Profile/*.c")
 
 # 链接参数
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/Dependency/Ld/Link.ld)
+
+if(WCH_TOOL_CHAIN)
+  add_link_options(-march=rv32imac)
+else()
+  add_link_options(-march=rv32imac_zicsr)
+endif()
+
 add_link_options(
-  -march=rv32imac
   -mabi=ilp32
   -nostartfiles
   -Xlinker
   --gc-sections
   -Wl,--print-memory-usage
   -Wl,-Map,${PROJECT_NAME}.map
+  # -u _printf_float
   --specs=nano.specs
   --specs=nosys.specs)
 add_link_options(-T ${LINKER_SCRIPT})
 
+# ---------------------------- 链接标准库 ----------------------------
+# 用在add_executable之前
+link_libraries(m) # -lm  添加方法1
+
 # 编译可执行文件
 add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
 
-set(CMAKE_INSTALL_PREFIX /Users/kevin/Dev_tools/WCH/WCHISPTool_CMD/macOS/bin)
+# ---------------------------- 链接私有库 ----------------------------
+# 用在add_executable之后
 
-# 链接静态库
 target_link_libraries(
   ${PROJECT_NAME}.elf
+  # PRIVATE m                #-lm  添加方法2
   ${CMAKE_SOURCE_DIR}/Dependency/StdPeriphDriver/libISP583.a
   ${CMAKE_SOURCE_DIR}/Dependency/BLE_LIB/LIBCH58xBLE.a
   ${CMAKE_SOURCE_DIR}/Dependency/USB_LIB/libRV3UFI.a)
+
+set(CMAKE_INSTALL_PREFIX /Users/kevin/Dev_tools/WCH/WCHISPTool_CMD/macOS/bin)
 
 # 设置ELF, Bin / Hex 文件路径
 if(CMAKE_BUILD_TYPE AND (CMAKE_BUILD_TYPE STREQUAL "Debug"))

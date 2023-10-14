@@ -1,6 +1,6 @@
 # CH58X-CMake
 
-## 编译
+## ⑴ 编译
 
 摆脱eclipse编译环境，使用vscode编辑代码。
 
@@ -31,13 +31,13 @@ cmake -G"Ninja" ..
 cmake -G"Ninja" -D"你的路径/ninja.exe" ..
 ```
 
-## 调试
+## ⑵ 调试
 Mac OS M芯片平台：
 
 ### Tips :
 - WCH-Link :需要设置好正确的模式
 
-    （[说明中文版](https://www.wch.cn/downloads/WCH-LinkUserManual_PDF.html))([LinkUserManual](https://www.wch-ic.com/downloads/WCH-LinkUserManual_PDF.html))
+    （[说明书中文版](https://www.wch.cn/downloads/WCH-LinkUserManual_PDF.html))([LinkUserManual](https://www.wch-ic.com/downloads/WCH-LinkUserManual_PDF.html))
 
     如果是ARM架构的芯片，则设置为ARM模式，否则需要设置为RISC-V模式
 
@@ -49,37 +49,60 @@ Mac OS M芯片平台：
 
 - 安装cortex-debug 1.4.4版本
 
-    因为沁恒使用的是GCC8，1.4.4版本是最后兼容GCC8的版本了。(再次敦促：沁恒，该更新Toolchain了 ！！)
+    因为沁恒使用的是GCC8，cortex-debug 1.4.4版本是最后兼容GCC8的版本了。(再次敦促：沁恒，该更新Toolchain了 ！！)
 
 
 最后就可以Debug了
 
 ---
 
-## MRS Linux _x64 Toolchain&OpenOCD使用说明
+## ⑶ MRS Linux Mac Toolchain & OpenOCD 下载说明
 ### FLASH CMD
 
-``` Shell
+
 [RISC-V]
-sudo ./openocd -f wch-riscv.cfg -c init -c halt -c "flash erase_sector wch_riscv 0 last " -c exit   #erase all
 
-sudo ./openocd -f wch-riscv.cfg  -c init -c halt  -c "program xxx.hex\bin\elf " -c exit             #program
+erase all
+```
+sudo ./openocd -f wch-riscv.cfg -c init -c halt -c "flash erase_sector wch_riscv 0 last " -c exit
+```
+program
+```
+sudo ./openocd -f wch-riscv.cfg  -c init -c halt  -c "program xxx.hex/bin/elf" -c exit
+```
 
-sudo ./openocd -f wch-riscv.cfg -c init -c halt -c "verify_image xxx.hex\bin\elf" -c exit           #verify
+verify
+```
+sudo ./openocd -f wch-riscv.cfg -c init -c halt -c "verify_image xxx.hex/bin/elf" -c exit
+```
 
-sudo ./openocd -f wch-riscv.cfg -c init -c halt -c wlink_reset_resume -c exit                       #reset and resume
+reset and resume
+```
+sudo ./openocd -f wch-riscv.cfg -c init -c halt -c wlink_reset_resume -c exit
+```
 
 
 [ARM]
-sudo ./openocd -f wch-arm.cfg -c init -c halt -c "flash erase_sector wch_arm 0 last " -c exit       #erase all
 
-sudo ./openocd -f wch-arm.cfg  -c init -c halt  -c "program xxx.hex\bin\elf " -c exit               #program
-
-sudo ./openocd -f wch-arm.cfg -c init -c halt -c "verify_image xxx.hex\bin\elf" -c exit             #verify
-
-
+erase all
+```
+sudo ./openocd -f wch-riscv.cfg -c init -c halt -c "flash erase_sector wch_riscv 0 last " -c exit
+```
+program
+```
+sudo ./openocd -f wch-arm.cfg  -c init -c halt  -c "program xxx.hex/bin/elf " -c exit
 ```
 
+verify
+```
+sudo ./openocd -f wch-arm.cfg -c init -c halt -c "verify_image xxx.hex/bin/elf" -c exit
+```
+
+
+！备注：如果因为权限无法运行，执行
+```
+chmod 755 ./openocd
+```
 
 参考链接：
 

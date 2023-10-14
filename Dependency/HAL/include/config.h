@@ -43,11 +43,11 @@
                                                                                                                                                                                                   空闲模式    - 5
  【TEMPERATION】
  TEM_SAMPLE                                 - 是否打开根据温度变化校准的功能，单次校准耗时小于10ms( 默认:TRUE )
- 
+
  【CALIBRATION】
  BLE_CALIBRATION_ENABLE                     - 是否打开定时校准的功能，单次校准耗时小于10ms( 默认:TRUE )
  BLE_CALIBRATION_PERIOD                     - 定时校准的周期，单位ms( 默认:120000 )
- 
+
  【SNV】
  BLE_SNV                                    - 是否开启SNV功能，用于储存绑定信息( 默认:TRUE )
  BLE_SNV_ADDR                               - SNV信息保存地址，使用data flash最后( 默认:0x77E00 )
@@ -64,7 +64,7 @@
  BLE_BUFF_NUM                               - 控制器缓存的包数量( 默认:5 )
  BLE_TX_NUM_EVENT                           - 单个连接事件最多可以发多少个数据包( 默认:1 )
  BLE_TX_POWER                               - 发射功率( 默认:LL_TX_POWEER_0_DBM (0dBm) )
- 
+
  【MULTICONN】
  PERIPHERAL_MAX_CONNECTION                  - 最多可同时做多少从机角色( 默认:1 )
  CENTRAL_MAX_CONNECTION                     - 最多可同时做多少主机角色( 默认:3 )
@@ -83,10 +83,10 @@
 #ifndef HAL_SLEEP
 #define HAL_SLEEP                           FALSE
 #endif
-#ifndef SLEEP_RTC_MIN_TIME                   
+#ifndef SLEEP_RTC_MIN_TIME
 #define SLEEP_RTC_MIN_TIME                  US_TO_RTC(1000)
 #endif
-#ifndef SLEEP_RTC_MAX_TIME                   
+#ifndef SLEEP_RTC_MAX_TIME
 #define SLEEP_RTC_MAX_TIME                  MS_TO_RTC(RTC_TO_MS(RTC_TIMER_MAX_VALUE) - 1000 * 60 * 60)
 #endif
 #ifndef WAKE_UP_RTC_MAX_TIME

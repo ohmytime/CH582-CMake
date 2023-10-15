@@ -3,13 +3,13 @@
  * Author             : WCH
  * Version            : V1.0
  * Date               : 2018/12/10
- * Description        : Peripheral slave multi-connection application, initialize 
- *                      broadcast connection parameters, then broadcast, after 
- *                      connecting to the host, request to update connection parameters, 
+ * Description        : Peripheral slave multi-connection application, initialize
+ *                      broadcast connection parameters, then broadcast, after
+ *                      connecting to the host, request to update connection parameters,
  *                      and transmit data through custom services
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * Attention: This software (modified or not) and binary are used for 
+ * Attention: This software (modified or not) and binary are used for
  * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 

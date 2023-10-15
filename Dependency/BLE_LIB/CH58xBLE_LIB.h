@@ -443,7 +443,7 @@ extern const uint8_t VER_LIB[];  // LIB version
 #define NAV_UUID                        0x2A68  // Navigation
 #define POS_QUALITY_UUID                0x2A69  // Position Quality
 #define LN_FEATURE_UUID                 0x2A6A  // LN Feature
-#define LN_CTRL_PT_UUID                 0x2A6B  // LN Control Point  
+#define LN_CTRL_PT_UUID                 0x2A6B  // LN Control Point
 #define ELE_UUID                        0x2A6C  // Elevation
 #define PRESSURE_UUID                   0x2A6D  // Pressure
 #define TEMP_UUID                       0x2A6E  // Temperature
@@ -541,7 +541,7 @@ extern const uint8_t VER_LIB[];  // LIB version
 /************************************ATT***************************************/
 #define ATT_MTU_SIZE                    23   //!< Minimum ATT MTU size
 #define ATT_MAX_MTU_SIZE                512  //!< Maximum ATT MTU size
-// ATT Methods 
+// ATT Methods
 #define ATT_ERROR_RSP                   0x01 //!< ATT Error Response
 #define ATT_EXCHANGE_MTU_REQ            0x02 //!< ATT Exchange MTU Request
 #define ATT_EXCHANGE_MTU_RSP            0x03 //!< ATT Exchange MTU Response
@@ -1515,7 +1515,7 @@ typedef struct
  * All subsequent ATT Requests and Indications received by the local ATT Server
  * and Client respectively will be dropped.
  *
- * This message is to inform the app (that has registered with GAP by calling 
+ * This message is to inform the app (that has registered with GAP by calling
  * GAP_RegisterForMsgs()) in case it wants to drop the connection.
  */
 typedef struct
@@ -1529,7 +1529,7 @@ typedef struct
  * by the local ATT Server or Client when the ATT MTU size is updated for a
  * connection. The default ATT MTU size is 23 octets.
  *
- * This message is to inform the app (that has registered with GAP by calling 
+ * This message is to inform the app (that has registered with GAP by calling
  * GAP_RegisterForMsgs()) about the new ATT MTU size negotiated for a connection.
  */
 typedef struct
@@ -1722,8 +1722,8 @@ typedef struct
  *          - Read Request: ATT_READ_REQ
  *          - Read Blob Request: ATT_READ_BLOB_REQ
  *
- * @note    If blePending is returned then it's the responsibility of the application to respond to 
- *          ATT_READ_REQ and ATT_READ_BLOB_REQ message with ATT_READ_RSP and ATT_READ_BLOB_RSP 
+ * @note    If blePending is returned then it's the responsibility of the application to respond to
+ *          ATT_READ_REQ and ATT_READ_BLOB_REQ message with ATT_READ_RSP and ATT_READ_BLOB_RSP
  *          message respectively.
  *
  * @note    Payload 'pValue' used with ATT_READ_RSP and ATT_READ_BLOB_RSP must be allocated using GATT_bm_alloc().
@@ -1742,7 +1742,7 @@ typedef struct
  */
 typedef uint8_t (*pfnGATTReadAttrCB_t)( uint16_t connHandle, gattAttribute_t *pAttr, uint8_t *pValue,
     uint16_t *pLen, uint16_t offset, uint16_t maxLen, uint8_t method );
-    
+
 /**
  * @brief   Callback function prototype to write an attribute value.
  *
@@ -1772,7 +1772,7 @@ typedef uint8_t (*pfnGATTReadAttrCB_t)( uint16_t connHandle, gattAttribute_t *pA
  */
 typedef uint8_t (*pfnGATTWriteAttrCB_t)( uint16_t connHandle, gattAttribute_t *pAttr, uint8_t *pValue,
     uint16_t len, uint16_t offset, uint8_t method );
-    
+
 /**
  * @brief   Callback function prototype to authorize a Read or Write operation
  *          on a given attribute.
@@ -2448,7 +2448,7 @@ typedef struct
 #define  TX_MODE_TX_TIMEOUT TX_MODE_TX_FAIL //!< time of data transmission
 #define  TX_MODE_RX_DATA              0x02  //!< auto tx mode receive data(ack) and enter idle state
 #define  TX_MODE_RX_TIMEOUT           0x12  //!< auto tx mode receive timeout and enter idle state
-#define  TX_MODE_HOP_SHUT             0x22  
+#define  TX_MODE_HOP_SHUT             0x22
 
 // RX_MODE call RF_Rx
 #define  RX_MODE_RX_DATA              0x03  //!< basic or auto rx mode receive data
@@ -2458,7 +2458,7 @@ typedef struct
 #define  RX_MODE_TX_FINISH            0x04  //!< auto rx mode sends data(ack) successfully and enters idle state
 #define  RX_MODE_TX_FAIL              0x14  //!< auto rx mode fail to send data and enter idle state
 #define  RX_MODE_TX_TIMEOUT RX_MODE_TX_FAIL //!< time of data transmission
-#define  RX_MODE_HOP_SHUT             0x24  
+#define  RX_MODE_HOP_SHUT             0x24
 
 // LLE_MODE_TYPE
 #define  LLE_MODE_BASIC               (0)   //!< basic mode, enter idle state after sending or receive
@@ -2782,7 +2782,7 @@ extern bStatus_t LL_Decrypt( uint8_t *key, uint8_t *plaintextData, uint8_t *decr
  *
  * @param   handle - connect handle
  *
- * @return  0xFFFFFFFF-handle error,number of packets not receiving ack 
+ * @return  0xFFFFFFFF-handle error,number of packets not receiving ack
  */
 extern uint32_t LL_GetNumberOfUnAckPacket( uint16_t handle );
 
@@ -2834,7 +2834,7 @@ extern int16_t BLE_ReadCfo( void );
 
 /**
  * @brief   pa control init
- *          
+ *
  * @note    Can't be called until  role Init
  *
  * @param   paControl - pa control parameters(global variable)
@@ -2844,9 +2844,9 @@ extern int16_t BLE_ReadCfo( void );
 extern void BLE_PAControlInit( blePaControlConfig_t *paControl );
 
 /**
- * @brief   ble register reset and rf calibration 
+ * @brief   ble register reset and rf calibration
  *
- * @param   None 
+ * @param   None
  *
  * @return  None
  */
@@ -2886,7 +2886,7 @@ extern void LLE_IRQLibHandler( void );
  *
  * @return  access address
  * the Access Address meets the following requirements:
- * It shall have no more than six consecutive zeros or ones. 
+ * It shall have no more than six consecutive zeros or ones.
  * It shall not be t he advertising channel packets锟斤拷 Access Address.
  * It shall not be a sequence that differ s from the advertising channel packets' Access Address by only one bit.
  * It shall not have all four octets equal.
@@ -2903,7 +2903,7 @@ extern uint8_t linkDB_Register( pfnLinkDBCB_t pFunc );
 
 /*
  * linkDB_State - Check to see if a physical link is in a specific state.
- * 
+ *
  *    returns TRUE is the link is in state. FALSE, otherwise.
  */
 extern uint8_t linkDB_State( uint16_t connectionHandle, uint8_t state );
@@ -2970,13 +2970,13 @@ extern void GATT_RegisterForInd( uint8_t taskId );
  *
  * @param   handle - handle to look for
  * @param   pHandle - handle of owner of attribute (to be returned)
- * 
+ *
  * @return  Pointer to attribute record. NULL, otherwise.
  */
 extern gattAttribute_t *GATT_FindHandle( uint16_t handle, uint16_t *pHandle );
 
 /**
- * @brief   This sub-procedure is used when a server is configured to 
+ * @brief   This sub-procedure is used when a server is configured to
  *          indicate a characteristic value to a client and expects an
  *          attribute protocol layer acknowledgement that the indication
  *          was successfully received.
@@ -3005,9 +3005,9 @@ extern gattAttribute_t *GATT_FindHandle( uint16_t handle, uint16_t *pHandle );
  */
 extern bStatus_t GATT_Indication( uint16_t connHandle, attHandleValueInd_t *pInd, uint8_t authenticated, uint8_t taskId );
 /**
- * @brief   This sub-procedure is used when a server is configured to 
+ * @brief   This sub-procedure is used when a server is configured to
  *          notify a characteristic value to a client without expecting
- *          any attribute protocol layer acknowledgement that the 
+ *          any attribute protocol layer acknowledgement that the
  *          notification was successfully received.
  *
  *          The ATT Handle Value Notification is used in this sub-procedure.
@@ -3062,7 +3062,7 @@ extern bStatus_t GATT_Notification( uint16_t connHandle, attHandleValueNoti_t *p
 extern bStatus_t GATT_ExchangeMTU( uint16_t connHandle, attExchangeMTUReq_t *pReq, uint8_t taskId );
 
 /**
- * @brief   This sub-procedure is used by a client to discover all 
+ * @brief   This sub-procedure is used by a client to discover all
  *          the primary services on a server.
  *
  *          The ATT Read By Group Type Request is used with the Attribute
@@ -3095,7 +3095,7 @@ extern bStatus_t GATT_DiscAllPrimaryServices( uint16_t connHandle, uint8_t taskI
 /**
  * @brief   This sub-procedure is used by a client to discover a specific
  *          primary service on a server when only the Service UUID is
- *          known. The primary specific service may exist multiple times 
+ *          known. The primary specific service may exist multiple times
  *          on a server. The primary service being discovered is identified
  *          by the service UUID.
  *
@@ -3131,7 +3131,7 @@ extern bStatus_t GATT_DiscPrimaryServiceByUUID( uint16_t connHandle, uint8_t *pU
 
 /**
  * @brief   This sub-procedure is used by a client to find include
- *          service declarations within a service definition on a 
+ *          service declarations within a service definition on a
  *          server. The service specified is identified by the service
  *          handle range.
  *
@@ -3166,7 +3166,7 @@ extern bStatus_t GATT_DiscPrimaryServiceByUUID( uint16_t connHandle, uint8_t *pU
 extern bStatus_t GATT_FindIncludedServices( uint16_t connHandle, uint16_t startHandle, uint16_t endHandle, uint8_t taskId );
 
 /**
- * @brief   This sub-procedure is used by a client to find all the 
+ * @brief   This sub-procedure is used by a client to find all the
  *          characteristic declarations within a service definition on
  *          a server when only the service handle range is known. The
  *          service specified is identified by the service handle range.
@@ -3202,11 +3202,11 @@ extern bStatus_t GATT_FindIncludedServices( uint16_t connHandle, uint16_t startH
 extern bStatus_t GATT_DiscAllChars( uint16_t connHandle, uint16_t startHandle, uint16_t endHandle, uint8_t taskId );
 
 /**
- * @brief   This sub-procedure is used by a client to discover service 
- *          characteristics on a server when only the service handle 
- *          ranges are known and the characteristic UUID is known. 
+ * @brief   This sub-procedure is used by a client to discover service
+ *          characteristics on a server when only the service handle
+ *          ranges are known and the characteristic UUID is known.
  *          The specific service may exist multiple times on a server.
- *          The characteristic being discovered is identified by the 
+ *          The characteristic being discovered is identified by the
  *          characteristic UUID.
  *
  *          The ATT Read By Type Request is used with the Attribute Type
@@ -3238,10 +3238,10 @@ extern bStatus_t GATT_DiscAllChars( uint16_t connHandle, uint16_t startHandle, u
 extern bStatus_t GATT_DiscCharsByUUID( uint16_t connHandle, attReadByTypeReq_t *pReq, uint8_t taskId );
 
 /**
- * @brief   This sub-procedure is used by a client to find all the 
+ * @brief   This sub-procedure is used by a client to find all the
  *          characteristic descriptors Attribute Handles and Attribute
- *          Types within a characteristic definition when only the 
- *          characteristic handle range is known. The characteristic 
+ *          Types within a characteristic definition when only the
+ *          characteristic handle range is known. The characteristic
  *          specified is identified by the characteristic handle range.
  *
  *          The ATT Find Information Request is used with the Starting
@@ -3277,12 +3277,12 @@ extern bStatus_t GATT_DiscAllCharDescs( uint16_t connHandle, uint16_t startHandl
  * @brief   This sub-procedure is used to read a Characteristic Value
  *          from a server when the client knows the Characteristic Value
  *          Handle. The ATT Read Request is used with the Attribute Handle
- *          parameter set to the Characteristic Value Handle. The Read 
+ *          parameter set to the Characteristic Value Handle. The Read
  *          Response returns the Characteristic Value in the Attribute
  *          Value parameter.
  *
  *          The Read Response only contains a Characteristic Value that
- *          is less than or equal to (ATT_MTU ?1) octets in length. If 
+ *          is less than or equal to (ATT_MTU ?1) octets in length. If
  *          the Characteristic Value is greater than (ATT_MTU - 1) octets
  *          in length, the Read Long Characteristic Value procedure may
  *          be used if the rest of the Characteristic Value is required.
@@ -3319,7 +3319,7 @@ extern bStatus_t GATT_ReadCharValue( uint16_t connHandle, attReadReq_t *pReq, ui
  *          The Attribute Type is set to the known characteristic UUID and
  *          the Starting Handle and Ending Handle parameters shall be set
  *          to the range over which this read is to be performed. This is
- *          typically the handle range for the service in which the 
+ *          typically the handle range for the service in which the
  *          characteristic belongs.
  *
  *          If the return status from this function is SUCCESS, the calling
@@ -3348,7 +3348,7 @@ extern bStatus_t GATT_ReadUsingCharUUID( uint16_t connHandle, attReadByTypeReq_t
 /**
  * @brief   This sub-procedure is used to read a Characteristic Value from
  *          a server when the client knows the Characteristic Value Handle
- *          and the length of the Characteristic Value is longer than can 
+ *          and the length of the Characteristic Value is longer than can
  *          be sent in a single Read Response Attribute Protocol message.
  *
  *          The ATT Read Blob Request is used in this sub-procedure.
@@ -3378,8 +3378,8 @@ extern bStatus_t GATT_ReadLongCharValue( uint16_t connHandle, attReadBlobReq_t *
 
 /**
  * @brief   This sub-procedure is used to read multiple Characteristic Values
- *          from a server when the client knows the Characteristic Value 
- *          Handles. The Attribute Protocol Read Multiple Requests is used 
+ *          from a server when the client knows the Characteristic Value
+ *          Handles. The Attribute Protocol Read Multiple Requests is used
  *          with the Set Of Handles parameter set to the Characteristic Value
  *          Handles. The Read Multiple Response returns the Characteristic
  *          Values in the Set Of Values parameter.
@@ -3418,16 +3418,16 @@ extern bStatus_t GATT_ReadMultiCharValues( uint16_t connHandle, attReadMultiReq_
  *          Value. This sub-procedure can not be used to write a long
  *          characteristic; instead the Write Long Characteristic Values
  *          sub-procedure should be used.
- * 
+ *
  *          The ATT Write Command is used for this sub-procedure. The
  *          Attribute Handle parameter shall be set to the Characteristic
  *          Value Handle. The Attribute Value parameter shall be set to
  *          the new Characteristic Value.
  *
  *          No response will be sent to the calling application task for this
- *          sub-procedure. If the Characteristic Value write request is the 
- *          wrong size, or has an invalid value as defined by the profile, 
- *          then the write will not succeed and no error will be generated 
+ *          sub-procedure. If the Characteristic Value write request is the
+ *          wrong size, or has an invalid value as defined by the profile,
+ *          then the write will not succeed and no error will be generated
  *          by the server.
  *
  * @param   connHandle - connection to use
@@ -3444,25 +3444,25 @@ extern bStatus_t GATT_WriteNoRsp( uint16_t connHandle, attWriteReq_t *pReq );
 
 /**
  * @brief   This sub-procedure is used to write a Characteristic Value
- *          to a server when the client knows the Characteristic Value 
+ *          to a server when the client knows the Characteristic Value
  *          Handle and the ATT Bearer is not encrypted. This sub-procedure
  *          shall only be used if the Characteristic Properties authenticated
  *          bit is enabled and the client and server device share a bond as
  *          defined in the GAP.
  *
  *          This sub-procedure only writes the first (ATT_MTU ?15) octets
- *          of an Attribute Value. This sub-procedure cannot be used to 
+ *          of an Attribute Value. This sub-procedure cannot be used to
  *          write a long Attribute.
  *
  *          The ATT Write Command is used for this sub-procedure. The
  *          Attribute Handle parameter shall be set to the Characteristic
- *          Value Handle. The Attribute Value parameter shall be set to 
+ *          Value Handle. The Attribute Value parameter shall be set to
  *          the new Characteristic Value authenticated by signing the
  *          value, as defined in the Security Manager.
  *
  *          No response will be sent to the calling application task for this
- *          sub-procedure. If the authenticated Characteristic Value that is 
- *          written is the wrong size, or has an invalid value as defined by 
+ *          sub-procedure. If the authenticated Characteristic Value that is
+ *          written is the wrong size, or has an invalid value as defined by
  *          the profile, or the signed value does not authenticate the client,
  *          then the write will not succeed and no error will be generated by
  *          the server.
@@ -3485,10 +3485,10 @@ extern bStatus_t GATT_SignedWriteNoRsp( uint16_t connHandle, attWriteReq_t *pReq
  *          to a server when the client knows the characteristic value
  *          handle. This sub-procedure only writes the first (ATT_MTU-3)
  *          octets of a characteristic value. This sub-procedure can not
- *          be used to write a long attribute; instead the Write Long 
+ *          be used to write a long attribute; instead the Write Long
  *          Characteristic Values sub-procedure should be used.
  *
- *          The ATT Write Request is used in this sub-procedure. The 
+ *          The ATT Write Request is used in this sub-procedure. The
  *          Attribute Handle parameter shall be set to the Characteristic
  *          Value Handle. The Attribute Value parameter shall be set to
  *          the new characteristic.
@@ -3519,7 +3519,7 @@ extern bStatus_t GATT_WriteCharValue( uint16_t connHandle, attWriteReq_t *pReq, 
 /**
  * @brief   This sub-procedure is used to write a Characteristic Value to
  *          a server when the client knows the Characteristic Value Handle
- *          but the length of the Characteristic Value is longer than can 
+ *          but the length of the Characteristic Value is longer than can
  *          be sent in a single Write Request Attribute Protocol message.
  *
  *          The ATT Prepare Write Request and Execute Write Request are
@@ -3558,11 +3558,11 @@ extern bStatus_t GATT_WriteLongCharValue( uint16_t connHandle, attPrepareWriteRe
  *          and assurance is required that the correct Characteristic Value
  *          is going to be written by transferring the Characteristic Value
  *          to be written in both directions before the write is performed.
- *          This sub-procedure can also be used when multiple values must 
+ *          This sub-procedure can also be used when multiple values must
  *          be written, in order, in a single operation.
  *
  *          The sub-procedure has two phases, the first phase prepares the
- *          characteristic values to be written.  Once this is complete, 
+ *          characteristic values to be written.  Once this is complete,
  *          the second phase performs the execution of all of the prepared
  *          characteristic value writes on the server from this client.
  *
@@ -3606,7 +3606,7 @@ extern bStatus_t GATT_ReliableWrites( uint16_t connHandle, attPrepareWriteReq_t 
  *          declaration's Attribute handle.
  *
  *          The ATT Read Request is used for this sub-procedure. The Read
- *          Request is used with the Attribute Handle parameter set to the 
+ *          Request is used with the Attribute Handle parameter set to the
  *          characteristic descriptor handle. The Read Response returns the
  *          characteristic descriptor value in the Attribute Value parameter.
  *
@@ -3704,7 +3704,7 @@ extern bStatus_t GATT_WriteCharDesc( uint16_t connHandle, attWriteReq_t *pReq, u
 /**
  * @brief   This sub-procedure is used to write a Characteristic Value to
  *          a server when the client knows the Characteristic Value Handle
- *          but the length of the Characteristic Value is longer than can 
+ *          but the length of the Characteristic Value is longer than can
  *          be sent in a single Write Request Attribute Protocol message.
  *
  *          The ATT Prepare Write Request and Execute Write Request are
@@ -4119,7 +4119,7 @@ extern bStatus_t GAPRole_TerminateLink( uint16_t connHandle );
  * @param   connHandle - connection handle
  *
  * @return  bStatus_t: HCI Error Code.<BR>
- *          
+ *
  */
 extern bStatus_t GAPRole_ReadRssiCmd( uint16_t connHandle );
 
@@ -4507,7 +4507,7 @@ extern void RF_SetChannel( uint32_t channel );
 extern void RF_FrequencyHoppingShut( void );
 
 /**
- * @brief       
+ * @brief
  *
  * @param   resendCount - Maximum count of sending HOP_TX pdu,0 = unlimited.
  *
@@ -4516,7 +4516,7 @@ extern void RF_FrequencyHoppingShut( void );
 extern uint8_t RF_FrequencyHoppingTx( uint8_t resendCount );
 
 /**
- * @brief       
+ * @brief
  *
  * @param   timeoutMS - Maximum time to wait for receiving HOP_TX pdu(Time = n * 1mSec),0 = unlimited.
  *

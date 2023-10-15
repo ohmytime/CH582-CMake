@@ -6,7 +6,7 @@
  * Description
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * Attention: This software (modified or not) and binary are used for 
+ * Attention: This software (modified or not) and binary are used for
  * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
@@ -227,9 +227,9 @@ int adc_to_temperature_celsius(uint16_t adc_val)
 
     C25 = (*((PUINT32)ROM_CFG_TMP_25C));
 
-    /* current temperature = standard temperature + (adc deviation * adc linearity coefficient) */ 
+    /* current temperature = standard temperature + (adc deviation * adc linearity coefficient) */
     temp = (((C25 >> 16) & 0xFFFF) ? ((C25 >> 16) & 0xFFFF) : 25) + \
-        (adc_val - ((int)(C25 & 0xFFFF))) * 10 / 27; 
+        (adc_val - ((int)(C25 & 0xFFFF))) * 10 / 27;
 
     return (temp);
 }

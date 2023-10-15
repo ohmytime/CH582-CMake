@@ -6,7 +6,7 @@
  * Description        : 睡眠配置及其初始化
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * Attention: This software (modified or not) and binary are used for 
+ * Attention: This software (modified or not) and binary are used for
  * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
@@ -28,7 +28,7 @@ uint32_t CH58X_LowPower(uint32_t time)
 #if(defined(HAL_SLEEP)) && (HAL_SLEEP == TRUE)
     uint32_t time_sleep, time_curr;
     unsigned long irq_status;
-    
+
     SYS_DisableAllIrq(&irq_status);
     time_curr = RTC_GetCycle32k();
     // 检测睡眠时间
@@ -37,9 +37,9 @@ uint32_t CH58X_LowPower(uint32_t time)
     } else {
         time_sleep = time - time_curr;
     }
-    
+
     // 若睡眠时间小于最小睡眠时间或大于最大睡眠时间，则不睡眠
-    if ((time_sleep < SLEEP_RTC_MIN_TIME) || 
+    if ((time_sleep < SLEEP_RTC_MIN_TIME) ||
         (time_sleep > SLEEP_RTC_MAX_TIME)) {
         SYS_RecoverIrq(irq_status);
         return 2;

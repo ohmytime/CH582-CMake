@@ -3,12 +3,12 @@
  * Author             : WCH
  * Version            : V1.0
  * Date               : 2018/12/10
- * Description        : Customize services with five different attributes, 
- *                      including readable, writable, notification, 
+ * Description        : Customize services with five different attributes,
+ *                      including readable, writable, notification,
  *                      readable and writable, and safe readable
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * Attention: This software (modified or not) and binary are used for 
+ * Attention: This software (modified or not) and binary are used for
  * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 

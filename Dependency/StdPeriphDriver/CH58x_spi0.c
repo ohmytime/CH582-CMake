@@ -6,7 +6,7 @@
  * Description
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * Attention: This software (modified or not) and binary are used for 
+ * Attention: This software (modified or not) and binary are used for
  * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
@@ -183,7 +183,7 @@ void SPI0_MasterRecv(uint8_t *pbuf, uint16_t len)
  *
  * @brief   DMA方式连续发送数据
  *
- * @param   pbuf    - 待发送数据起始地址,需要四字节对其
+ * @param   pbuf    - 待发送数据起始地址,需要四字节对齐
  * @param   len     - 待发送数据长度
  *
  * @return  none

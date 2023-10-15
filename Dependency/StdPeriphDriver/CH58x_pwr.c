@@ -6,7 +6,7 @@
  * Description
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * Attention: This software (modified or not) and binary are used for 
+ * Attention: This software (modified or not) and binary are used for
  * microcontroller manufactured by Nanjing Qinheng Microelectronics.
  *******************************************************************************/
 
@@ -28,7 +28,6 @@ void PWR_DCDCCfg(FunctionalState s)
 
     if(s == DISABLE)
     {
-        
         adj &= ~RB_DCDC_CHARGE;
         plan &= ~(RB_PWR_DCDC_EN | RB_PWR_DCDC_PRE); // 旁路 DC/DC
         sys_safe_access_enable();
@@ -191,7 +190,6 @@ void PowerMonitor(FunctionalState s, VolM_LevelypeDef vl)
         }
         else
         {
-            
             cfg = vl & 0x03;
             ctrl = RB_BAT_DET_EN;
         }

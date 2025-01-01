@@ -721,6 +721,11 @@ static void simpleProfileChangeCB(uint8_t paramID, uint8_t *pValue, uint16_t len
             uint8_t newValue[SIMPLEPROFILE_CHAR1_LEN];
             tmos_memcpy(newValue, pValue, len);
             PRINT("profile ChangeCB CHAR1.. \n");
+            //打印发送的CHAR1数据
+            for (int i = 0; i < len; i++)
+            {
+                PRINT("Sent data-char1 = %02X \n", newValue[i]);  // 使用十六进制格式打印每个字节的值
+            }
             break;
         }
 
@@ -729,6 +734,11 @@ static void simpleProfileChangeCB(uint8_t paramID, uint8_t *pValue, uint16_t len
             uint8_t newValue[SIMPLEPROFILE_CHAR3_LEN];
             tmos_memcpy(newValue, pValue, len);
             PRINT("profile ChangeCB CHAR3..\n");
+            //打印发送的CHAR3数据
+            for (int i = 0; i < len; i++)
+            {
+                PRINT("Sent data-char3 = %02X \n", newValue[i]);  // 使用十六进制格式打印每个字节的值
+            }
             break;
         }
 
